@@ -1,8 +1,8 @@
 package com.nabilmh.seekmax.shared
 
 import com.apollographql.apollo.ApolloClient
+import com.nabilmh.seekmax.BuildConfig
 import com.nabilmh.seekmax.feature.auth.api.AuthApiService
-import com.nabilmh.seekmax.feature.home.api.MainApiService
 import com.nabilmh.seekmax.utils.AuthInterceptor
 import com.nabilmh.seekmax.utils.SharedPreferenceManager
 import com.nabilmh.seekmax.utils.TokenManager
@@ -48,14 +48,14 @@ class SingletonModule {
     fun provideRetrofitBuilder(okHttpClient: OkHttpClient): Retrofit.Builder =
         Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl("http://localhost:3001/")
+            .baseUrl(BuildConfig.REST_API)
             .addConverterFactory(GsonConverterFactory.create())
 
     @Singleton
     @Provides
     fun providerGraphqlClient(okHttpClient: OkHttpClient): ApolloClient {
         return ApolloClient.builder()
-            .serverUrl("http://localhost:3002/graphql")
+            .serverUrl(BuildConfig.GRAPH_API)
             .okHttpClient(okHttpClient)
             .build()
     }
@@ -67,12 +67,5 @@ class SingletonModule {
             .build()
             .create(AuthApiService::class.java)
 
-    @Singleton
-    @Provides
-    fun provideMainAPIService(okHttpClient: OkHttpClient, retrofit: Retrofit.Builder): MainApiService =
-        retrofit
-            .client(okHttpClient)
-            .build()
-            .create(MainApiService::class.java)
 
 }

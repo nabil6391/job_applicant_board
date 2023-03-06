@@ -1,5 +1,6 @@
 package com.nabilmh.seekmax.feature.home
 
+import JobsQuery
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -32,8 +33,8 @@ class MainViewModel @Inject constructor(
                 }
                 else -> {
                     val jobs = mapToJob(response)
-
-                    liveData.value = ViewState.Loaded(jobs, false)
+                    resultsList.addAll(jobs)
+                    liveData.value = ViewState.Loaded(resultsList, false)
 
                 }
             }
@@ -49,7 +50,8 @@ class MainViewModel @Inject constructor(
 
                 when {
                     response.hasErrors() -> {
-                        liveData.value = ViewState.Error(response.errors?.get(0)?.message!!)
+                        canLoadMore = false
+                        liveData.value = ViewState.Loaded(resultsList, false)
                     }
                     else -> {
                         val jobs = mapToJob(response)
@@ -58,7 +60,6 @@ class MainViewModel @Inject constructor(
                         resultsList.addAll(jobs)
 
                         liveData.value = ViewState.Loaded(resultsList, false)
-
                     }
                 }
             }
@@ -66,7 +67,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun mapToJob(response: Response<JobsQuery.Data>): List<Job> {
-        val jobs = response.data?.jobs()?.jobs()?.map {
+        val jobs = response.data?.active()?.jobs()?.map {
             Job(
                 it._id()!!,
                 it.description()!!,

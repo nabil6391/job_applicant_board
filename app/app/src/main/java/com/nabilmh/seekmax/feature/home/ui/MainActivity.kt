@@ -7,18 +7,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AppBarDefaults
-import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -28,7 +23,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -36,13 +30,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.nabilmh.seekmax.feature.auth.AuthViewModel
 import com.nabilmh.seekmax.feature.auth.ui.LoginActivity
 import com.nabilmh.seekmax.feature.home.MainViewModel
-import com.nabilmh.seekmax.feature.home.model.Job
 import com.nabilmh.seekmax.ui.theme.MyApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
 import isScrollToEnd
@@ -137,36 +128,8 @@ fun HomeScreen(state: MainViewModel.ViewState?, onLoadMore : () -> Unit) {
             }
         }
         MainViewModel.ViewState.Loading -> {
-
+            CircularProgressIndicator()
         }
     }
 
-}
-
-@Composable
-private fun JobItemComposable(job: Job) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 5.dp, horizontal = 10.dp)
-            .clip(RoundedCornerShape(6.dp))
-    ) {
-        Column(Modifier.padding(10.dp)) {
-            Text(
-                text = job.positionTitle,
-                style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
-            )
-            Spacer(modifier = Modifier.height(5.dp))
-            Text(text = "Company Name ${job.industry}", style = MaterialTheme.typography.caption)
-            Spacer(modifier = Modifier.height(15.dp))
-            Text(text = job.description, style = MaterialTheme.typography.body2)
-            Spacer(modifier = Modifier.height(10.dp))
-            if (job.haveIApplied) {
-                Row {
-                    Text(text = "Applied")
-                    Icon(Icons.Filled.CheckCircle, contentDescription = "Applied")
-                }
-            }
-        }
-    }
 }

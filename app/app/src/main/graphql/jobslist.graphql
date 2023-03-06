@@ -1,4 +1,4 @@
-query JobsQuery($page : Int)  {
+query JobsQuery($page: Int) {
   active(page: $page) {
     jobs {
       description
@@ -6,19 +6,11 @@ query JobsQuery($page : Int)  {
       industry
       haveIApplied
       positionTitle
-      location
-      salaryRange {
-        max
-        min
-      }
     }
-    page
-    size
-    total
   }
 }
 
-query SingleJobQuery($jobId: String!)  {
+query SingleJobQuery($jobId: String!) {
   job(id: $jobId) {
     _id
     description
@@ -27,8 +19,8 @@ query SingleJobQuery($jobId: String!)  {
     location
     positionTitle
     salaryRange {
-        max
-        min
+      max
+      min
     }
   }
 }

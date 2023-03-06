@@ -33,4 +33,4 @@
 
 - Introduce Integration testing
 - Modify the backend error response to have a uniform error handling mechanism
--
+- Integrate Crashlytics, Analytics and Performance Library

@@ -1,11 +1,10 @@
-package com.nabilmh.seekmax
+package com.nabilmh.seekmax.feature.applaunch
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import com.nabilmh.seekmax.feature.auth.ui.LoginActivity
 import com.nabilmh.seekmax.feature.home.ui.MainActivity
-import com.nabilmh.seekmax.shared.AppLaunchModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -23,12 +23,6 @@ android {
         }
     }
 
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -45,6 +39,36 @@ android {
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+    buildTypes {
+        debug {
+            // Set to null to override default debug keystore and defer to the product flavor.
+            signingConfig null
+        }
+        release {
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+        }
+    }
+    flavorDimensions "releaseType"
+
+    productFlavors {
+        dev {
+            buildConfigField "String", "REST_API", STAGING_REST_API
+            buildConfigField "String", "GRAPH_API", STAGING_GRAPH_API
+            applicationIdSuffix ".dev"
+            dimension "releaseType"
+            signingConfig signingConfigs.debug
+        }
+        production {
+            buildConfigField "String", "REST_API", PRODUCTION_REST_API
+            buildConfigField "String", "GRAPH_API", PRODUCTION_GRAPH_API
+            dimension "releaseType"
+            //  Set a real certificate for release builds
+            signingConfig signingConfigs.debug
         }
     }
 }
@@ -98,7 +122,4 @@ dependencies {
     def nav_version = "2.5.3"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-
-
-
 }

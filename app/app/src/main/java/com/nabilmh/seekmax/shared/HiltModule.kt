@@ -3,7 +3,6 @@ package com.nabilmh.seekmax.shared
 import com.apollographql.apollo.ApolloClient
 import com.nabilmh.seekmax.feature.auth.api.AuthApiService
 import com.nabilmh.seekmax.feature.auth.repository.AuthRepository
-import com.nabilmh.seekmax.feature.home.api.MainApiService
 import com.nabilmh.seekmax.feature.home.repository.MainRepository
 import dagger.Module
 import dagger.Provides
@@ -18,6 +17,5 @@ class HiltModule {
     fun provideAuthRepository(authApiService: AuthApiService) = AuthRepository(authApiService)
 
     @Provides
-    fun provideMainRepository(mainApiService: MainApiService, apolliClient: ApolloClient) =
-        MainRepository(mainApiService, apolliClient)
+    fun provideMainRepository(apolliClient: ApolloClient) = MainRepository( apolliClient)
 }
